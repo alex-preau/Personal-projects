@@ -62,6 +62,20 @@ double read_double(void** registers, short loc){
   printf("%lf\n",contents );
   return contents;
 }
+//type is 0 if int, 1 if double
+void *add_gp(short first, short second,short loc,short type){
+  void*ret=NULL
+  if(type == 0){
+    long adding = read_long(gp_registers,first)
+    adding += read_long(gp_registers,second)
+    ret=write_to_register_long(gp_registers,adding,loc)
+  }else{
+    long adding = read_double(gp_registers,first)
+    adding += read_double(gp_registers,second)
+    ret=write_to_register_double(gp_registers,adding,loc)
+  }
+  return ret
+}
 
 
 /*So I somehow have to take all of the commands into memory because of jumps,
